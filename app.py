@@ -8,7 +8,7 @@ import pandas as pd
 # 2. Create the app object
 app = FastAPI()
 pickle_in = open("diabetes.pkl","rb")
-classifier=joblib.load(pickle_in)
+mod =joblib.load(pickle_in)
 
 # 3. Index route, opens automatically on http://127.0.0.1:8000
 @app.get('/')
@@ -30,7 +30,7 @@ def predict_Diseases(data: diseases):
     DiabetesPedigreeFunction = data['DiabetesPedigreeFunction']
     Age = data['Age']
 
-    prediction = classifier.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
+    prediction = mod.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
     if (prediction[0] == 1):
         prediction = "The person is diabetic"
     else:
